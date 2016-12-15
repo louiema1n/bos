@@ -38,7 +38,7 @@
   </listener>
   
   
-  <!-- 配置struts2过滤器 -->
+  <!-- 配置struts2过滤器(服务器内部转发) -->
   <filter>
   	<filter-name>struts2</filter-name>
   	<filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
@@ -46,6 +46,8 @@
   <filter-mapping>
   	<filter-name>struts2</filter-name>
   	<url-pattern>/*</url-pattern>
+  	<dispatcher>REQUEST</dispatcher>
+  	<dispatcher>FORWARD</dispatcher>
   </filter-mapping>
   
   

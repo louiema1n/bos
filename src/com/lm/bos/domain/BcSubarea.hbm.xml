@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.lm.bos.domain.BcSubarea" table="bc_subarea" catalog="bos">
+        <id name="id" type="string">
+            <column name="id" length="32" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="bcDecidedzone" class="com.lm.bos.domain.BcDecidedzone" fetch="select">
+            <column name="decidedzone_id" length="32" />
+        </many-to-one>
+        <many-to-one name="bcRegion" class="com.lm.bos.domain.BcRegion" fetch="select">
+            <column name="region_id" length="32" />
+        </many-to-one>
+        <property name="addresskey" type="string">
+            <column name="addresskey" length="100" />
+        </property>
+        <property name="startnum" type="string">
+            <column name="startnum" length="30" />
+        </property>
+        <property name="endnum" type="string">
+            <column name="endnum" length="30" />
+        </property>
+        <property name="single" type="java.lang.Character">
+            <column name="single" length="1" />
+        </property>
+        <property name="position" type="string">
+            <column name="position" />
+        </property>
+    </class>
+</hibernate-mapping>

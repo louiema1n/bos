@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.lm.bos.domain.BcRegion" table="bc_region" catalog="bos">
+        <id name="id" type="string">
+            <column name="id" length="32" />
+            <generator class="assigned" />
+        </id>
+        <property name="province" type="string">
+            <column name="province" length="50" />
+        </property>
+        <property name="city" type="string">
+            <column name="city" length="50" />
+        </property>
+        <property name="district" type="string">
+            <column name="district" length="50" />
+        </property>
+        <property name="postcode" type="string">
+            <column name="postcode" length="50" />
+        </property>
+        <property name="shortcode" type="string">
+            <column name="shortcode" length="30" />
+        </property>
+        <property name="citycode" type="string">
+            <column name="citycode" length="30" />
+        </property>
+        <set name="bcSubareas" table="bc_subarea" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="region_id" length="32" />
+            </key>
+            <one-to-many class="com.lm.bos.domain.BcSubarea" />
+        </set>
+    </class>
+</hibernate-mapping>

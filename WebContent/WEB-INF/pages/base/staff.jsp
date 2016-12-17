@@ -151,6 +151,22 @@
 	function doDblClickRow(rowIndex, rowData){
 		alert("双击表格数据...");
 	}
+	
+	//验证手机号码
+	$(function(){
+    	//正则表达式
+    	var reg = /^1[3|5|7|8][0-9]{9}$/;
+		$.extend($.fn.validatebox.defaults.rules, {    
+		    chkPhoneNum: {    
+		        validator: function(value, param){    
+		            return reg.test(value);    
+		        },    
+		        message: '请输入正确的手机号码.'   
+	    	}    
+		});  
+	});
+	
+	
 </script>	
 </head>
 <body class="easyui-layout" style="visibility:hidden;">
@@ -161,27 +177,39 @@
 		<div region="north" style="height:31px;overflow:hidden;" split="false" border="false" >
 			<div class="datagrid-toolbar">
 				<a id="save" icon="icon-save" href="#" class="easyui-linkbutton" plain="true" >保存</a>
+				<!-- 为点击保存提供单击事件 -->
+				<script type="text/javascript">
+					$(function(){
+						//绑定事件
+						$("#save").click(function(){
+							//校验表单
+							if($("#addStaff").form("validate")) {
+								$("#addStaff").submit();
+							}
+						});
+						
+					});
+				</script>
+				
 			</div>
 		</div>
 		
 		<div region="center" style="overflow:auto;padding:5px;" border="false">
-			<form>
+			<form id="addStaff" action="${pageContext.request.contextPath }/staffAction_addStaff" method="post">
 				<table class="table-edit" width="80%" align="center">
 					<tr class="title">
 						<td colspan="2">收派员信息</td>
 					</tr>
 					<!-- TODO 这里完善收派员添加 table -->
 					<tr>
-						<td>取派员编号</td>
-						<td><input type="text" name="id" class="easyui-validatebox" required="true"/></td>
-					</tr>
-					<tr>
 						<td>姓名</td>
 						<td><input type="text" name="name" class="easyui-validatebox" required="true"/></td>
 					</tr>
 					<tr>
 						<td>手机</td>
-						<td><input type="text" name="telephone" class="easyui-validatebox" required="true"/></td>
+						<td><input type="text" name="telephone" class="easyui-validatebox" required="true"
+							data-options="validType:'chkPhoneNum'"
+						/></td>
 					</tr>
 					<tr>
 						<td>单位</td>

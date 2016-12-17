@@ -27,6 +27,11 @@
 <script
 	src="${pageContext.request.contextPath }/js/easyui/locale/easyui-lang-zh_CN.js"
 	type="text/javascript"></script>
+	<!-- 防止window拖出界面 -->
+<script
+	src="${pageContext.request.contextPath }/js/outOfBounds.js"
+	type="text/javascript"></script>
+	
 <script type="text/javascript">
 	// 初始化ztree菜单
 	$(function() {

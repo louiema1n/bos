@@ -43,7 +43,12 @@
 		<action name="userAction_*" class="userAction" method="{1}">
 			<!-- 跳转至首页 -->
 			<result name="index">/index.jsp</result>
-			
 		</action>
+			
+		<!-- staff -->
+		<action name="staffAction_*" class="staffAction" method="{1}">
+			<result name="list">/page_base_staff</result>
+		</action>
+		
 	</package>
 </struts>

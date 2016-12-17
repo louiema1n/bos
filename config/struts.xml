@@ -8,10 +8,20 @@
 	
 	<constant name="struts.objectFactory" value="spring"/>
 	
+	<!-- 注册国际化文件(struts2 core) -->
+	<constant name="struts.custom.i18n.resources" value="message"></constant>
+	
 	<package name="basicstruts2" extends="struts-default">
 		<!-- 需要进行权限控制的页面访问(默认class,默认method) -->
 		<action name="page_*_*">
 			<result name="success" type="dispatcher">/WEB-INF/pages/{1}/{2}.jsp</result>
+		</action>
+		
+		<action name="userAction_*" class="userAction" method="{1}">
+			<!-- 跳转至首页 -->
+			<result name="index">/index.jsp</result>
+			<!-- 跳转至登录界面 -->
+			<result name="login">/login.jsp</result>
 		</action>
 	</package>
 </struts>

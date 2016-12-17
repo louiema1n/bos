@@ -14,4 +14,15 @@ import com.lm.bos.domain.User;
 //@Scope("prototype")		//¶àÀý
 public class UserDaoImpl extends BaseDaoImpl<User> implements IUserDao {
 
+	@Override
+	public User findUserByUser(String username, String password) {
+		String hql = "FROM User u where u.username = ? AND u.password = ? ";
+		List users = this.getHibernateTemplate().find(hql, username, password);
+		if (users != null && users.size() != 0) {
+			//²éÑ¯µ½user
+			return (User) users.get(0);
+		}
+		return null;
+	}
+
 }

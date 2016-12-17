@@ -5,4 +5,11 @@ import com.lm.bos.domain.User;
 
 public interface IUserDao extends IBaseDao<User> {
 
+	/**
+	 * 通过username和password查找user
+	 * @param user
+	 * @return
+	 */
+	User findUserByUser(String username, String password);
+
 }

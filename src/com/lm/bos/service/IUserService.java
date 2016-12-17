@@ -11,4 +11,11 @@ public interface IUserService {
 	 */
 	public User login(User model);
 
+	/**
+	 * 根据id和密码更新用户信息
+	 * @param password
+	 * @param id
+	 */
+	public void updateUserById(String password, String id);
+
 }

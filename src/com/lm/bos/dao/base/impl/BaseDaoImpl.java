@@ -7,6 +7,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
@@ -58,6 +60,22 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements IBaseDao<T> {
 	public List<T> findAll() {
 		String hql = "FROM " + entityClass.getSimpleName();
 		return this.getHibernateTemplate().find(hql);
+	}
+
+	@Override
+	public void executeUpdate(String queryName, Object... objects) {
+		//获取当前线程绑定的session对象
+		Session session = this.getSession();
+		//通过查询方法名获取query对象
+		Query query = session.getNamedQuery(queryName);
+		//为query的HQL语句进行赋值
+		int i = 0 ;
+		for (Object object : objects) {
+			query.setParameter(i++, object);
+		}
+		//执行update方法
+		query.executeUpdate();
+		
 	}
 
 }

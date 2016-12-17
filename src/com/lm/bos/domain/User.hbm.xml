@@ -34,4 +34,8 @@
             <column name="remark" />
         </property>
     </class>
+    
+    <!-- 命名查询语句 -->
+    <query name="updateUserById">UPDATE User SET password = ? WHERE id = ? </query>
+    
 </hibernate-mapping>

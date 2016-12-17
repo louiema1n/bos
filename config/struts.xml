@@ -12,6 +12,29 @@
 	<constant name="struts.custom.i18n.resources" value="message"></constant>
 	
 	<package name="basicstruts2" extends="struts-default">
+	
+		<!-- 注册自定义拦截器BOSLoginInterceptor -->
+		<interceptors>
+			<!-- 自定义拦截器需过滤掉login方法 -->
+			<interceptor name="BOSLoginInterceptor" class="com.lm.bos.web.intercepter.BOSLoginInterceptor">
+				<param name="excludeMethods">login</param>
+			</interceptor>
+			<!-- 如果自定义拦截器将不会执行默认拦截器栈,需将自定义拦截器放入默认拦截器栈中 -->
+			<interceptor-stack name="myInterceptorStack">
+				<interceptor-ref name="BOSLoginInterceptor"></interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		
+		<!-- 重置默认拦截器栈 -->
+		<default-interceptor-ref name="myInterceptorStack"></default-interceptor-ref>
+		
+		<!-- 由于自定义拦截器也需要访问login结果集,需将其定义为全局结果集 -->
+		<global-results>
+			<!-- 跳转至登录界面 -->
+			<result name="login">/login.jsp</result>
+		</global-results>
+	
 		<!-- 需要进行权限控制的页面访问(默认class,默认method) -->
 		<action name="page_*_*">
 			<result name="success" type="dispatcher">/WEB-INF/pages/{1}/{2}.jsp</result>
@@ -20,8 +43,7 @@
 		<action name="userAction_*" class="userAction" method="{1}">
 			<!-- 跳转至首页 -->
 			<result name="index">/index.jsp</result>
-			<!-- 跳转至登录界面 -->
-			<result name="login">/login.jsp</result>
+			
 		</action>
 	</package>
 </struts>

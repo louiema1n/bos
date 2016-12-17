@@ -23,4 +23,10 @@ public class UserServiceImpl implements IUserService {
 		return userDao.findUserByUser(user.getUsername(), MD5Utils.md5(user.getPassword()));
 	}
 
+	@Override
+	public void updateUserById(String password, String id) {
+		//queryNameÀ´×ÔÓÚUser.hbm.xml
+		userDao.executeUpdate("updateUserById", MD5Utils.md5(password), id);
+	}
+
 }

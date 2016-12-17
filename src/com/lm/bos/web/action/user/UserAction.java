@@ -1,5 +1,7 @@
 package com.lm.bos.web.action.user;
 
+import java.io.IOException;
+
 import javax.annotation.Resource;
 
 import org.apache.commons.lang3.StringUtils;
@@ -25,7 +27,10 @@ public class UserAction extends BaseAction<User> {
 		this.checkcode = checkcode;
 	}
 	
-	//登录
+	/**
+	 * 登录
+	 * @return
+	 */
 	public String login() {
 		//获取session域中的验证码
 		String validateCode = (String) ServletActionContext.getRequest().getSession().getAttribute("key");
@@ -48,5 +53,36 @@ public class UserAction extends BaseAction<User> {
 			return "login";
 		}
 		
+	}
+	
+	/**
+	 * 退出登陆
+	 */
+	public String logout() {
+		//销毁session,并返回登录界面
+		ServletActionContext.getRequest().getSession().invalidate();
+		return "login";
+	}
+	
+	/**
+	 * 修改当前登录用户的密码
+	 * @throws IOException 
+	 */
+	public String editPassword() throws IOException {
+		//得到当前登录用户
+		User loginUser = (User) ServletActionContext.getRequest().getSession().getAttribute("loginUser");
+		//定义flag返回浏览器告知其修改成功与否
+		String flag = "1";
+		try {
+			//通过当前用户的id和提交修改的新密码进行更新密码操作
+			userService.updateUserById(this.getModel().getPassword(), loginUser.getId());
+		} catch (Exception e) {
+			// 修改失败
+			flag = "0";
+		}
+		//将flag返回浏览器,设置返回值类型
+		ServletActionContext.getResponse().setContentType("text/html;charset=utf-8");
+		ServletActionContext.getResponse().getWriter().print(flag);
+		return NONE;
 	}
 }

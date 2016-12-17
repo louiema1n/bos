@@ -19,4 +19,12 @@ public interface IBaseDao<T> {
 	public T findById(Serializable id);
 	
 	public List<T> findAll();
+	
+	/**
+	 * 根据查询方法名称和相应的参数更新用户信息的通用方法
+	 * 
+	 * @param queryName--在*.hbm.xml中配置
+	 * @param ...objects
+	 */
+	public void executeUpdate(String queryName, Object ...objects);
 }

@@ -71,4 +71,38 @@ public class staffAction extends BaseAction<BcStaff> {
 		
 		return NONE;
 	}
+	
+	/**
+	 * 批量作废staff
+	 */
+	//id
+	private String ids;
+	public void setIds(String ids) {
+		this.ids = ids;
+	}
+	
+	public String deleteBatch() {
+		staffService.deleteBatch(ids);
+		return "list";
+	}
+	
+	/**
+	 * 修改收派员信息
+	 */
+	public String editStaff() {
+		//由于staff中不是所有字段都会进行更新,所有需要先将数据库中已存在的数据查出
+		BcStaff oldStaff = staffService.query(this.getModel());
+		//将修改的数据覆盖原数据
+		oldStaff.setName(this.getModel().getName());
+		oldStaff.setTelephone(this.getModel().getTelephone());
+		oldStaff.setHaspda(this.getModel().getHaspda());
+		oldStaff.setStandard(this.getModel().getStandard());
+		oldStaff.setStation(this.getModel().getStation());
+		
+		//再更新数据库
+		staffService.update(oldStaff);
+		
+		return "list";
+	}
+	
 }

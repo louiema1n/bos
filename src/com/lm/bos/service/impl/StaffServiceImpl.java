@@ -27,4 +27,25 @@ public class StaffServiceImpl implements IStaffService {
 		
 	}
 
+	@Override
+	public void deleteBatch(String ids) {
+		//对ids进行拆分
+		String[] staffIds = ids.split(",");
+		//遍历,执行update语句
+		for (String id : staffIds) {
+			staffDao.executeUpdate("deleteStaff", id);
+		}
+		
+	}
+
+	@Override
+	public BcStaff query(BcStaff model) {
+		return staffDao.findById(model.getId());
+	}
+
+	@Override
+	public void update(BcStaff oldStaff) {
+		staffDao.update(oldStaff);
+	}
+
 }

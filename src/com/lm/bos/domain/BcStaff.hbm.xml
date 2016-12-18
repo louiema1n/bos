@@ -33,4 +33,6 @@
             <one-to-many class="com.lm.bos.domain.BcDecidedzone" />
         </set>
     </class>
+    <!-- 定义查询语句 -->
+    <query name="deleteStaff">UPDATE BcStaff SET deltag = '0' WHERE id = ? </query>
 </hibernate-mapping>

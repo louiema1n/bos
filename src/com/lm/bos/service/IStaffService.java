@@ -16,4 +16,23 @@ public interface IStaffService {
 	 */
 	void queryPage(PageBean pageBean);
 
+	/**
+	 * 批量作废staff
+	 * @param ids
+	 */
+	void deleteBatch(String ids);
+
+	/**
+	 * 查询staff
+	 * @param model
+	 * @return
+	 */
+	BcStaff query(BcStaff model);
+
+	/**
+	 * 修改staff
+	 * @param oldStaff
+	 */
+	void update(BcStaff oldStaff);
+
 }

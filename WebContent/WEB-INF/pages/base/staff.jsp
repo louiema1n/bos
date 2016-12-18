@@ -97,7 +97,7 @@
 		width : 120,
 		align : 'center',
 		formatter : function(data,row, index){
-			if(data=="0"){
+			if(data=="1"){
 				return "正常使用"
 			}else{
 				return "已作废";
@@ -121,15 +121,15 @@
 		
 		// 取派员信息表格
 		$('#grid').datagrid( {
-			iconCls : 'icon-forward',
+			//iconCls : 'icon-forward',
 			fit : true,
 			border : false,
 			rownumbers : true,
 			striped : true,
-			pageList: [30,50,100],
+			pageList: [3,5,10],
 			pagination : true,
 			toolbar : toolbar,
-			url : "json/staff.json",
+			url : "${pageContext.request.contextPath}/staffAction_queryPage.action",
 			idField : 'id',
 			columns : columns,
 			onDblClickRow : doDblClickRow

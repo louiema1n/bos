@@ -3,6 +3,8 @@ package com.lm.bos.dao.base;
 import java.io.Serializable;
 import java.util.List;
 
+import com.lm.bos.utils.PageBean;
+
 /**
  * 抽取持久层通用方法
  * @author xtztx
@@ -27,4 +29,10 @@ public interface IBaseDao<T> {
 	 * @param ...objects
 	 */
 	public void executeUpdate(String queryName, Object ...objects);
+	
+	/**
+	 * 分页查询
+	 * @param pageBean
+	 */
+	public void queryPage(PageBean pageBean);
 }

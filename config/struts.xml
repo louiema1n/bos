@@ -26,8 +26,8 @@
 			</interceptor-stack>
 		</interceptors>
 		
-		<!-- 重置默认拦截器栈 -->
-		<default-interceptor-ref name="myInterceptorStack"></default-interceptor-ref>
+		<!-- 重置默认拦截器栈
+		<default-interceptor-ref name="myInterceptorStack"></default-interceptor-ref> -->
 		
 		<!-- 由于自定义拦截器也需要访问login结果集,需将其定义为全局结果集 -->
 		<global-results>

@@ -10,9 +10,13 @@ import javax.annotation.Resource;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Projection;
+import org.hibernate.criterion.Projections;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.lm.bos.dao.base.IBaseDao;
+import com.lm.bos.utils.PageBean;
 
 public class BaseDaoImpl<T> extends HibernateDaoSupport implements IBaseDao<T> {
 
@@ -76,6 +80,29 @@ public class BaseDaoImpl<T> extends HibernateDaoSupport implements IBaseDao<T> {
 		//执行update方法
 		query.executeUpdate();
 		
+	}
+
+	//根据离线条件分页查询
+	@Override
+	public void queryPage(PageBean pageBean) {
+		//查询总记录数total--select count(*)...
+		DetachedCriteria detachedCriteria = pageBean.getDetachedCriteria();
+		//hibernate框架默认发送select * from ...语句,所以需要自定义hibernate发送的sql
+		detachedCriteria.setProjection(Projections.rowCount());
+		List<Long> listTotal = this.getHibernateTemplate().findByCriteria(detachedCriteria);
+		//封装进pagebean
+		pageBean.setTotal(listTotal.get(0).intValue());
+		
+		//查询详细信息rows--由于自定义了hibernate框架的sql和表对象映射关系,所以需要重置
+		detachedCriteria.setProjection(null);
+		//重置表对象映射关系
+		detachedCriteria.setResultTransformer(DetachedCriteria.ROOT_ENTITY);
+		
+		int firstResult = (pageBean.getCurrentPage() - 1) * pageBean.getPageSize();	//要查询的第一个结果下标
+		int maxResults = pageBean.getPageSize();									//要查询多少个结果
+		List<Object> listRows = this.getHibernateTemplate().findByCriteria(detachedCriteria, firstResult, maxResults);
+		//封装进pagebean
+		pageBean.setRows(listRows);
 	}
 
 }

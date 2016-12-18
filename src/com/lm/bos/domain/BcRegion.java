@@ -17,6 +17,11 @@ public class BcRegion implements java.io.Serializable {
 	private String shortcode;
 	private String citycode;
 	private Set<BcSubarea> bcSubareas = new HashSet<BcSubarea>(0);
+	
+	//序列化对象时,找的get方法
+	public String getName() {
+		return province + city + district;
+	}
 
 	public BcRegion() {
 	}

@@ -45,9 +45,14 @@
 			<result name="index">/index.jsp</result>
 		</action>
 			
-		<!-- staff -->
+		<!-- staff收派员管理 -->
 		<action name="staffAction_*" class="staffAction" method="{1}">
 			<result name="list">/page_base_staff</result>
+		</action>
+		
+		<!-- region区域管理 -->
+		<action name="regionAction_*" class="regionAction" method="{1}">
+			
 		</action>
 		
 	</package>

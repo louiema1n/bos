@@ -3,6 +3,7 @@ package com.lm.bos.dao.base;
 import java.io.Serializable;
 import java.util.List;
 
+import com.lm.bos.domain.BcRegion;
 import com.lm.bos.utils.PageBean;
 
 /**
@@ -13,6 +14,12 @@ import com.lm.bos.utils.PageBean;
  */
 public interface IBaseDao<T> {
 	public void save(T entity);
+	
+	/**
+	 * id存在就update,不存在就insert
+	 * @param entity
+	 */
+	public void saveOrUpdate(T entity);
 	
 	public void delete(T entity);
 	

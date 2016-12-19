@@ -26,9 +26,6 @@ import com.lm.bos.web.action.base.BaseAction;
 @Scope("prototype")
 public class RegionAction extends BaseAction<BcRegion> {
 	
-	@Autowired
-	private IRegionService regionService;
-
 	/**
 	 * 上传文件,批量导入region数据
 	 */
@@ -114,8 +111,8 @@ public class RegionAction extends BaseAction<BcRegion> {
 	 */
 	public String queryPage() throws IOException {
 		regionService.queryPage(pageBean);
-		//封装json
-		this.writePageBean2Json(pageBean, new String[]{"currentPage","detachedCriteria","pageSize"});
+		//封装json(排除关联表字段,避免死循环)
+		this.writePageBean2Json(pageBean, new String[]{"currentPage","detachedCriteria","pageSize","bcSubareas"});
 		return NONE;
 	}
 	

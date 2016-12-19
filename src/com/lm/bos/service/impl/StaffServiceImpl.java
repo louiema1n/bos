@@ -1,5 +1,9 @@
 package com.lm.bos.service.impl;
 
+import java.util.List;
+
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,6 +50,13 @@ public class StaffServiceImpl implements IStaffService {
 	@Override
 	public void update(BcStaff oldStaff) {
 		staffDao.update(oldStaff);
+	}
+
+	@Override
+	public List<BcStaff> findByDeltag() {
+		DetachedCriteria detachedCriteria = DetachedCriteria.forClass(BcStaff.class);
+		detachedCriteria.add(Restrictions.eq("deltag", '1'));	//eq相等;ne不相等
+		return staffDao.findByCriteria(detachedCriteria);
 	}
 
 }

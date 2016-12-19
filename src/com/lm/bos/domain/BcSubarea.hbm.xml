@@ -6,12 +6,13 @@
     <class name="com.lm.bos.domain.BcSubarea" table="bc_subarea" catalog="bos">
         <id name="id" type="string">
             <column name="id" length="32" />
-            <generator class="assigned" />
+            <generator class="uuid" />
         </id>
         <many-to-one name="bcDecidedzone" class="com.lm.bos.domain.BcDecidedzone" fetch="select">
             <column name="decidedzone_id" length="32" />
         </many-to-one>
-        <many-to-one name="bcRegion" class="com.lm.bos.domain.BcRegion" fetch="select">
+        <!-- lazy懒加载 -->
+        <many-to-one lazy="false" name="bcRegion" class="com.lm.bos.domain.BcRegion" fetch="select">
             <column name="region_id" length="32" />
         </many-to-one>
         <property name="addresskey" type="string">

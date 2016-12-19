@@ -1,6 +1,7 @@
 package com.lm.bos.web.action.staff;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.apache.struts2.ServletActionContext;
 import org.hibernate.criterion.DetachedCriteria;
@@ -20,9 +21,6 @@ import net.sf.json.JsonConfig;
 @Scope("prototype")
 public class staffAction extends BaseAction<BcStaff> {
 
-	@Autowired
-	private IStaffService staffService;
-	
 	/**
 	 * 增加staff
 	 */
@@ -75,6 +73,17 @@ public class staffAction extends BaseAction<BcStaff> {
 		staffService.update(oldStaff);
 		
 		return "list";
+	}
+	
+	/**
+	 * 查询没有作废的收派员数据(deltag = '1')
+	 * @throws IOException 
+	 */
+	public String listAjax() throws IOException {
+		List<BcStaff> list = staffService.findByDeltag();
+		//过滤掉关联表字段
+		this.writeList2Json(list, new String[]{"bcDecidedzones"});
+		return NONE;
 	}
 	
 }

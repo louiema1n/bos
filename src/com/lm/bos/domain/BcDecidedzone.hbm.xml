@@ -8,12 +8,14 @@
             <column name="id" length="32" />
             <generator class="assigned" />
         </id>
-        <many-to-one name="bcStaff" class="com.lm.bos.domain.BcStaff" fetch="select">
+        <!-- lazy="false"关闭懒加载,否则定区分页查询时staff还是代理对象 -->
+        <many-to-one name="bcStaff" class="com.lm.bos.domain.BcStaff" lazy="false" fetch="select">
             <column name="staff_id" length="32" />
         </many-to-one>
         <property name="name" type="string">
             <column name="name" length="30" />
         </property>
+        <!-- inverse="true"定区表放弃外键关系维护 -->
         <set name="bcSubareas" table="bc_subarea" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="decidedzone_id" length="32" />

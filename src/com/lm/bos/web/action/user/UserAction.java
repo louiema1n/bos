@@ -17,10 +17,6 @@ import com.lm.bos.web.action.base.BaseAction;
 @Scope("prototype")
 public class UserAction extends BaseAction<User> {
 	
-	//注入userService
-	@Resource
-	private IUserService userService;
-	
 	//通过属性驱动获取jsp提交的验证码
 	private String checkcode;
 	public void setCheckcode(String checkcode) {

@@ -55,5 +55,15 @@
 			
 		</action>
 		
+		<!-- subarea分区管理 -->
+		<action name="subareaAction_*" class="subareaAction" method="{1}">
+			<result name="list">/page_base_subarea</result>
+		</action>
+		
+		<!-- decidedzone定区管理 -->
+		<action name="decidedzoneAction_*" class="decidedzoneAction" method="{1}">
+			<result name="list">/page_base_decidedzone</result>
+		</action>
+		
 	</package>
 </struts>

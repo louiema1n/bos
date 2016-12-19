@@ -1,5 +1,7 @@
 package com.lm.bos.service;
 
+import java.util.List;
+
 import com.lm.bos.domain.BcStaff;
 import com.lm.bos.utils.PageBean;
 
@@ -34,5 +36,11 @@ public interface IStaffService {
 	 * @param oldStaff
 	 */
 	void update(BcStaff oldStaff);
+
+	/**
+	 * 查询没有作废的staff数据
+	 * @return
+	 */
+	List<BcStaff> findByDeltag();
 
 }

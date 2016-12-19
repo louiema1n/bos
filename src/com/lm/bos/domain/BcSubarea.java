@@ -14,6 +14,10 @@ public class BcSubarea implements java.io.Serializable {
 	private String endnum;
 	private Character single;
 	private String position;
+	
+	public String getBcSubareaid() {
+		return id;
+	}
 
 	public BcSubarea() {
 	}

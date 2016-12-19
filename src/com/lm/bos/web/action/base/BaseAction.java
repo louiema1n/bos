@@ -5,11 +5,19 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.apache.struts2.ServletActionContext;
 import org.hibernate.criterion.DetachedCriteria;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.lm.bos.domain.BcRegion;
 import com.lm.bos.domain.BcStaff;
+import com.lm.bos.service.IDecidedzoneService;
+import com.lm.bos.service.IRegionService;
+import com.lm.bos.service.IStaffService;
+import com.lm.bos.service.ISubareaService;
+import com.lm.bos.service.IUserService;
 import com.lm.bos.utils.PageBean;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
@@ -19,6 +27,23 @@ import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
 
 public class BaseAction<T> extends ActionSupport implements ModelDriven<T> {
+	
+	//service
+	@Autowired
+	protected IRegionService regionService;
+	
+	@Autowired
+	protected IStaffService staffService;
+	
+	@Resource
+	protected IUserService userService;
+	
+	@Autowired
+	protected ISubareaService subareaService;
+	
+	@Autowired
+	protected IDecidedzoneService decidedzoneService;
+
 
 	//·â×°pagebean
 	protected PageBean pageBean = new PageBean();

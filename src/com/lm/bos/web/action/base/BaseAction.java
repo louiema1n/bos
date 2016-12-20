@@ -15,11 +15,13 @@ import com.lm.bos.crm.CustomerService;
 import com.lm.bos.domain.BcRegion;
 import com.lm.bos.domain.BcStaff;
 import com.lm.bos.service.IDecidedzoneService;
+import com.lm.bos.service.INoticebillService;
 import com.lm.bos.service.IRegionService;
 import com.lm.bos.service.IStaffService;
 import com.lm.bos.service.ISubareaService;
 import com.lm.bos.service.IUserService;
 import com.lm.bos.utils.PageBean;
+import com.lm.crm.domain.Customer;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 
@@ -47,6 +49,9 @@ public class BaseAction<T> extends ActionSupport implements ModelDriven<T> {
 	
 	@Autowired
 	protected CustomerService customerService;
+	
+	@Autowired
+	protected INoticebillService noticebillService;
 
 
 	//封装pagebean
@@ -91,7 +96,6 @@ public class BaseAction<T> extends ActionSupport implements ModelDriven<T> {
 	 * @throws IOException 
 	 */
 	public void writePageBean2Json(PageBean pageBean, String[] excludes) throws IOException {
-		//用json进行数据封装
 		//过滤掉不需要封装的数据
 		JsonConfig jsonConfig = new JsonConfig();
 		jsonConfig.setExcludes(excludes);
@@ -120,6 +124,26 @@ public class BaseAction<T> extends ActionSupport implements ModelDriven<T> {
 		//将json格式的data返回页面
 		ServletActionContext.getResponse().setContentType("text/json;charset=utf-8");
 		ServletActionContext.getResponse().getWriter().print(data);
+	}
+	
+	/**
+	 * 将Object对象封装成json
+	 * @param customer
+	 * @param strings
+	 * @throws IOException 
+	 */
+	public void writeObject2Json(Object obj, String[] excludes) throws IOException {
+		//过滤掉不需要封装的数据
+		JsonConfig jsonConfig = new JsonConfig();
+		jsonConfig.setExcludes(excludes);
+		
+		JSONObject jsonObject = JSONObject.fromObject(obj, jsonConfig);
+		String data = jsonObject.toString();
+		
+		//将json格式的data返回页面
+		ServletActionContext.getResponse().setContentType("text/json;charset=utf-8");
+		ServletActionContext.getResponse().getWriter().print(data);
+		
 	}
 
 }

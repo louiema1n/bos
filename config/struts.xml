@@ -65,5 +65,10 @@
 			<result name="list">/page_base_decidedzone</result>
 		</action>
 		
+		<!-- noticebill业务受理 -->
+		<action name="noticebillAction_*" class="noticebillAction" method="{1}">
+			<result name="add">/page_qupai_noticebill_add</result>
+		</action>
+		
 	</package>
 </struts>

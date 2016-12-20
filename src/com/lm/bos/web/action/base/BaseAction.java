@@ -11,6 +11,7 @@ import org.apache.struts2.ServletActionContext;
 import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.lm.bos.crm.CustomerService;
 import com.lm.bos.domain.BcRegion;
 import com.lm.bos.domain.BcStaff;
 import com.lm.bos.service.IDecidedzoneService;
@@ -43,6 +44,9 @@ public class BaseAction<T> extends ActionSupport implements ModelDriven<T> {
 	
 	@Autowired
 	protected IDecidedzoneService decidedzoneService;
+	
+	@Autowired
+	protected CustomerService customerService;
 
 
 	//·â×°pagebean

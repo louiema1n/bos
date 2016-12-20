@@ -58,4 +58,10 @@
 <!-- 事务注解 transaction-manager="transactionManager"可省略-->
 <tx:annotation-driven transaction-manager="transactionManager"></tx:annotation-driven>
 
+<!-- 配置客户端远程服务的代理对象 -->
+<bean id="customerService" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
+	<property name="serviceInterface" value="com.lm.bos.crm.CustomerService"/>
+	<property name="serviceUrl" value="http://localhost:8080/crm/remoting/customer"/>
+</bean>
+
 </beans>

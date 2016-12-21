@@ -5,12 +5,18 @@ import java.io.IOException;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.subject.Subject;
 import org.apache.struts2.ServletActionContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.lm.bos.domain.User;
 import com.lm.bos.service.IUserService;
+import com.lm.bos.utils.MD5Utils;
 import com.lm.bos.web.action.base.BaseAction;
 
 @Controller//("abc")
@@ -27,7 +33,7 @@ public class UserAction extends BaseAction<User> {
 	 * 登录
 	 * @return
 	 */
-	public String login() {
+	public String login_bak() {
 		//获取session域中的验证码
 		String validateCode = (String) ServletActionContext.getRequest().getSession().getAttribute("key");
 		//判断验证码
@@ -43,6 +49,31 @@ public class UserAction extends BaseAction<User> {
 				this.addActionError(this.getText("loginError"));
 				return "login";
 			}
+		} else {
+			//验证码错误,跳转至login.jsp,并回显错误信息
+			this.addActionError(this.getText("chkCodeError"));
+			return "login";
+		}
+		
+	}
+	/**
+	 * 登录
+	 * @return
+	 */
+	public String login() {
+		//获取session域中的验证码
+		String validateCode = (String) ServletActionContext.getRequest().getSession().getAttribute("key");
+		//判断验证码
+		if (StringUtils.isNotBlank(checkcode) && validateCode.equals(checkcode)) {
+			//获取当前用户对象
+			Subject subject = SecurityUtils.getSubject();	//未认证
+			//获取当前提交的密码
+			String password = this.getModel().getPassword();
+			//构造一个用户名密码令牌
+			AuthenticationToken token = new UsernamePasswordToken(this.getModel().getUsername(), MD5Utils.md5(password));
+			subject.login(token);
+			
+			return "";
 		} else {
 			//验证码错误,跳转至login.jsp,并回显错误信息
 			this.addActionError(this.getText("chkCodeError"));

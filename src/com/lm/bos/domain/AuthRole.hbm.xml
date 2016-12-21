@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.lm.bos.domain.AuthRole" table="auth_role" catalog="bos">
+        <id name="id" type="string">
+            <column name="id" length="32" />
+            <generator class="assigned" />
+        </id>
+        <property name="name" type="string">
+            <column name="name" />
+        </property>
+        <property name="code" type="string">
+            <column name="code" />
+        </property>
+        <property name="description" type="string">
+            <column name="description" />
+        </property>
+        <set name="authFunctions" table="role_function" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="role_id" length="32" not-null="true" />
+            </key>
+            <many-to-many entity-name="com.lm.bos.domain.AuthFunction">
+                <column name="function_id" length="32" not-null="true" />
+            </many-to-many>
+        </set>
+        <set name="users" table="user_role" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="role_id" length="32" not-null="true" />
+            </key>
+            <many-to-many entity-name="com.lm.bos.domain.User">
+                <column name="user_id" length="32" not-null="true" />
+            </many-to-many>
+        </set>
+    </class>
+</hibernate-mapping>

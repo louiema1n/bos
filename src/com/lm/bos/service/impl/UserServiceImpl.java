@@ -29,4 +29,10 @@ public class UserServiceImpl implements IUserService {
 		userDao.executeUpdate("updateUserById", MD5Utils.md5(password), id);
 	}
 
+	@Override
+	public User findByUsername(String username) {
+		return userDao.findByUsername(username);
+		
+	}
+
 }

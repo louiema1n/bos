@@ -64,4 +64,30 @@
 	<property name="serviceUrl" value="http://localhost:8080/crm/remoting/customer"/>
 </bean>
 
+<!-- 配置工厂bean，用于创建Shiro框架过滤器 -->
+<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+	<!-- 安全管理器 -->
+	<property name="securityManager" ref="securityManager"></property>
+	<!-- 登录界面 -->
+	<property name="loginUrl" value="/login.jsp"></property>
+	<!-- 成功页面 -->
+	<property name="successUrl" value="/index.jsp"></property>
+	<!-- 权限不足提示页面 -->
+	<property name="unauthorizedUrl" value="/unauthorizedUrl.jsp"></property>
+	<!-- URL拦截规则 -->
+	<property name="filterChainDefinitions">
+		<value>
+			/css/** = anon
+			/images/** = anon
+			/js/** anon
+			/validatecode.jsp* = anon
+			/userAction_login.action = anon
+			/page_base_staff.action = perms["staff"]
+			/* = authc
+		</value>
+	</property>
+</bean>
+
+<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager"></bean>
+
 </beans>

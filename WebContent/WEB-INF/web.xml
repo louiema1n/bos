@@ -2,6 +2,16 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
   <display-name>bos</display-name>
   
+  <!-- 配置shiroFilter过滤器 -->
+  <filter>
+  	<filter-name>shiroFilter</filter-name>
+  	<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>shiroFilter</filter-name>
+  	<url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
   <!-- 解决中文乱码问题(不能解决GET乱码) -->
   <filter>
   	<filter-name>characterEncodingFilter</filter-name>

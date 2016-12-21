@@ -2,9 +2,8 @@
 <!DOCTYPE hibernate-mapping PUBLIC 
     "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-    
 <hibernate-mapping>
-    <class name="com.lm.bos.domain.User" table="user">
+    <class name="com.lm.bos.domain.User" table="user" catalog="bos">
         <id name="id" type="string">
             <column name="id" length="32" />
             <generator class="assigned" />
@@ -33,9 +32,13 @@
         <property name="remark" type="string">
             <column name="remark" />
         </property>
+        <set name="authRoles" table="user_role" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="user_id" length="32" not-null="true" />
+            </key>
+            <many-to-many entity-name="com.lm.bos.domain.AuthRole">
+                <column name="role_id" length="32" not-null="true" />
+            </many-to-many>
+        </set>
     </class>
-    
-    <!-- 命名查询语句 -->
-    <query name="updateUserById">UPDATE User SET password = ? WHERE id = ? </query>
-    
 </hibernate-mapping>

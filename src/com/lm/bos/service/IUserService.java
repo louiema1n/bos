@@ -18,4 +18,6 @@ public interface IUserService {
 	 */
 	public void updateUserById(String password, String id);
 
+	public User findByUsername(String username);
+
 }

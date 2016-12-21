@@ -15,6 +15,7 @@ import com.lm.bos.crm.CustomerService;
 import com.lm.bos.domain.BcRegion;
 import com.lm.bos.domain.BcStaff;
 import com.lm.bos.service.IDecidedzoneService;
+import com.lm.bos.service.IFunctionService;
 import com.lm.bos.service.INoticebillService;
 import com.lm.bos.service.IRegionService;
 import com.lm.bos.service.IStaffService;
@@ -52,6 +53,9 @@ public class BaseAction<T> extends ActionSupport implements ModelDriven<T> {
 	
 	@Autowired
 	protected INoticebillService noticebillService;
+	
+	@Autowired
+	protected IFunctionService functionService;
 
 
 	//封装pagebean
@@ -74,7 +78,16 @@ public class BaseAction<T> extends ActionSupport implements ModelDriven<T> {
 	}
 	//在构造方法中动态获取T实际代表的类型
 	public BaseAction() {
-		ParameterizedType genericSuperclass = (ParameterizedType) this.getClass().getGenericSuperclass();
+		ParameterizedType genericSuperclass = null;
+		//判断this是否为cglib代理
+		if (this.getClass().getGenericSuperclass() instanceof ParameterizedType) {
+			//不是
+			genericSuperclass = (ParameterizedType) this.getClass().getGenericSuperclass();
+		} else {
+			//是
+			genericSuperclass = (ParameterizedType) this.getClass().getSuperclass().getGenericSuperclass();
+		}
+		
 		Type[] actualTypeArguments = genericSuperclass.getActualTypeArguments();
 		//获得T
 		Class<T> entityClass = (Class<T>) actualTypeArguments[0];

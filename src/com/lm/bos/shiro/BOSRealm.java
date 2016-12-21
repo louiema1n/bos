@@ -5,8 +5,10 @@ import javax.annotation.Resource;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 
@@ -21,8 +23,9 @@ public class BOSRealm extends AuthorizingRealm {
 	 * 授权
 	 */
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-		// TODO Auto-generated method stub
-		return null;
+		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+		info.addStringPermission("staff");	//为当前用户设置权限
+		return info;
 	}
 
 	/**
@@ -32,7 +35,18 @@ public class BOSRealm extends AuthorizingRealm {
 		UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) token;
 		//通过密码查询用户
 		User user = userService.findByUsername(usernamePasswordToken.getUsername());
-		return null;
+		if (user != null) {
+			//用户名存在,创建简单认证对象
+			/**
+			 * 参数一principal(主要的):签名,程序可以任意位置获取放入的对象
+			 * 参数二credentials(凭证)从数据库中查询到的密码
+			 * 参数三realmName当前realm名称
+			 */
+			SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, user.getPassword(), this.getClass().getSimpleName());
+			return info;
+		} else {
+			return null;
+		}
 	}
 
 }

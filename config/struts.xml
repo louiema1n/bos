@@ -33,7 +33,14 @@
 		<global-results>
 			<!-- 跳转至登录界面 -->
 			<result name="login">/login.jsp</result>
+			<result name="unauthorized">/unauthorizedUrl.jsp</result>
 		</global-results>
+		
+		<!-- 全局异常捕获 -->
+		<global-exception-mappings>
+			<exception-mapping result="unauthorized" exception="org.apache.shiro.authz.UnauthorizedException"></exception-mapping>
+		</global-exception-mappings>
+		
 	
 		<!-- 需要进行权限控制的页面访问(默认class,默认method) -->
 		<action name="page_*_*">
@@ -68,6 +75,11 @@
 		<!-- noticebill业务受理 -->
 		<action name="noticebillAction_*" class="noticebillAction" method="{1}">
 			<result name="add">/page_qupai_noticebill_add</result>
+		</action>
+		
+		<!-- function功能权限管理 -->
+		<action name="functionAction_*" class="functionAction" method="{1}">
+			<result name="list">/page_admin_function</result>
 		</action>
 		
 	</package>

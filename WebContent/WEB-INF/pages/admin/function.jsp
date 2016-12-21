@@ -39,7 +39,10 @@
 					}
 				}           
 			],
-			url : '',
+			url : '${pageContext.request.contextPath}/functionAction_queryPage.action',
+			fit : true,			//固定到页尾
+			pageList: [3,5,10],
+			pagination : true,
 			columns : [[
 			  {
 				  field : 'id',
@@ -54,10 +57,10 @@
 			  {
 				  field : 'description',
 				  title : '描述',
-				  width : 200
+				  width : 100
 			  },  
 			  {
-				  field : 'generateMenu',
+				  field : 'generatemenu',
 				  title : '是否生成菜单',
 				  width : 200
 			  },  

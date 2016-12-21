@@ -6,7 +6,9 @@ import javax.annotation.Resource;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.subject.Subject;
@@ -71,9 +73,21 @@ public class UserAction extends BaseAction<User> {
 			String password = this.getModel().getPassword();
 			//构造一个用户名密码令牌
 			AuthenticationToken token = new UsernamePasswordToken(this.getModel().getUsername(), MD5Utils.md5(password));
-			subject.login(token);
-			
-			return "";
+			try {
+				subject.login(token);
+			} catch (UnknownAccountException e) {
+				e.printStackTrace();
+				this.addActionError(this.getText("notFoundAccount"));
+				return "login";
+			} catch (Exception e) {
+				e.printStackTrace();
+				this.addActionError(this.getText("errorPwd"));
+				return "login";
+			}
+			//验证通过,获取放入SimpleAuthenticationInfo对象中的user
+			User user = (User) subject.getPrincipal();
+			ServletActionContext.getRequest().getSession().setAttribute("loginUser", user);
+			return "index";
 		} else {
 			//验证码错误,跳转至login.jsp,并回显错误信息
 			this.addActionError(this.getText("chkCodeError"));

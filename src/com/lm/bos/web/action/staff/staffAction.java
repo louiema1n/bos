@@ -3,6 +3,8 @@ package com.lm.bos.web.action.staff;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.struts2.ServletActionContext;
 import org.hibernate.criterion.DetachedCriteria;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +40,7 @@ public class staffAction extends BaseAction<BcStaff> {
 		//查询
 		staffService.queryPage(pageBean);
 		//封装json
-		this.writePageBean2Json(pageBean, new String[]{"currentPage","detachedCriteria","pageSize"});
+		this.writePageBean2Json(pageBean, new String[]{"currentPage","detachedCriteria","pageSize","bcDecidedzones"});
 		return NONE;
 	}
 	
@@ -51,6 +53,8 @@ public class staffAction extends BaseAction<BcStaff> {
 		this.ids = ids;
 	}
 	
+	@RequiresPermissions(value="staff")	//执行此方法需要staff权限
+	@RequiresRoles(value="abc")
 	public String deleteBatch() {
 		staffService.deleteBatch(ids);
 		return "list";

@@ -74,8 +74,8 @@
 		title : '其他信息',
 		colspan : 2
 	}, {
-		field : 'telephone',
-		title : '电话',
+		field : 'roleNames',
+		title : '角色名称',
 		width : 800,
 		rowspan : 2
 	} ], [ {
@@ -95,11 +95,13 @@
 		$('#grid').datagrid( {
 			iconCls : 'icon-forward',
 			fit : true,
+			pageList: [3,5,10],
+			pagination : true,
 			border : false,
 			rownumbers : true,
 			striped : true,
 			toolbar : toolbar,
-			url : "json/users.json",
+			url : "${pageContext.request.contextPath}/userAction_queryPage.action",
 			idField : 'id', 
 			frozenColumns : frozenColumns,
 			columns : columns,
@@ -121,7 +123,6 @@
 	}
 	
 	function doAdd() {
-		alert("添加用户");
 		location.href="${pageContext.request.contextPath}/page_admin_userinfo.action";
 	}
 

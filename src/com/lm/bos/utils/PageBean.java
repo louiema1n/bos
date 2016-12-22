@@ -9,8 +9,8 @@ import org.hibernate.criterion.DetachedCriteria;
  */
 public class PageBean {
 	//页面传递过来的
-	private int currentPage;	//当前页
-	private int pageSize;		//每页显示记录数
+	private int currentPage=1;	//当前页
+	private int pageSize=1;		//每页显示记录数
 	private DetachedCriteria detachedCriteria ;		//离线查询条件
 	
 	//需要根据条件向数据库查询的

@@ -6,7 +6,7 @@
     <class name="com.lm.bos.domain.AuthFunction" table="auth_function" catalog="bos">
         <id name="id" type="string">
             <column name="id" length="32" />
-            <generator class="assigned" />
+            <generator class="uuid" />
         </id>
         <many-to-one name="authFunction" class="com.lm.bos.domain.AuthFunction" fetch="select">
             <column name="pid" length="32" />
@@ -35,7 +35,7 @@
             </key>
             <one-to-many class="com.lm.bos.domain.AuthFunction" />
         </set>
-        <set name="authRoles" table="role_function" inverse="false" lazy="true" fetch="select">
+        <set name="authRoles" table="role_function" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="function_id" length="32" not-null="true" />
             </key>

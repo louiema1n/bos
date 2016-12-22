@@ -47,7 +47,10 @@
 					}
 				}           
 			],
-			url : '',
+			url : '${pageContext.request.contextPath}/roleAction_queryPage.action',
+			fit : true,			//固定到页尾
+			pageList: [3,5,10],
+			pagination : true,
 			columns : [[
 				{
 					field : 'id',

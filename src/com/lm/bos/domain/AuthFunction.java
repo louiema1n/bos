@@ -19,6 +19,13 @@ public class AuthFunction implements java.io.Serializable {
 	private Integer zindex;
 	private Set authFunctions = new HashSet(0);
 	private Set authRoles = new HashSet(0);
+	
+	public String getpId() {
+		if (authFunction != null) {
+			return authFunction.getId();
+		}
+		return "0";
+	}
 
 	public AuthFunction() {
 	}

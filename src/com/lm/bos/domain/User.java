@@ -19,7 +19,16 @@ public class User implements java.io.Serializable {
 	private String station;
 	private String telephone;
 	private String remark;
-	private Set authRoles = new HashSet(0);
+	private Set<AuthRole> authRoles = new HashSet<AuthRole>();
+
+	//È¨ÏÞÃû³Æ
+	public String getRoleNames() {
+		String roleNames = "";
+		for (AuthRole authRole : authRoles) {
+			roleNames += authRole.getName() + " ";
+		}
+		return roleNames;
+	}
 
 	public User() {
 	}

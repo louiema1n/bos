@@ -50,6 +50,7 @@
 		<action name="userAction_*" class="userAction" method="{1}">
 			<!-- 跳转至首页 -->
 			<result name="index">/index.jsp</result>
+			<result name="list">/page_admin_userlist</result>
 		</action>
 			
 		<!-- staff收派员管理 -->
@@ -80,6 +81,11 @@
 		<!-- function功能权限管理 -->
 		<action name="functionAction_*" class="functionAction" method="{1}">
 			<result name="list">/page_admin_function</result>
+		</action>
+		
+		<!-- role角色管理 -->
+		<action name="roleAction_*" class="roleAction" method="{1}">
+			<result name="list">/page_admin_role</result>
 		</action>
 		
 	</package>

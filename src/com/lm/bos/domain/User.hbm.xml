@@ -6,7 +6,7 @@
     <class name="com.lm.bos.domain.User" table="user" catalog="bos">
         <id name="id" type="string">
             <column name="id" length="32" />
-            <generator class="assigned" />
+            <generator class="uuid" />
         </id>
         <property name="username" type="string">
             <column name="username" length="20" not-null="true" />

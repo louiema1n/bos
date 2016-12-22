@@ -1,6 +1,7 @@
 package com.lm.bos.service;
 
 import com.lm.bos.domain.User;
+import com.lm.bos.utils.PageBean;
 
 public interface IUserService {
 
@@ -19,5 +20,9 @@ public interface IUserService {
 	public void updateUserById(String password, String id);
 
 	public User findByUsername(String username);
+
+	public void queryPage(PageBean pageBean);
+
+	public void add(User model, String[] roles);
 
 }

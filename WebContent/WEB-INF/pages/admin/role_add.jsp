@@ -51,12 +51,12 @@
 		};
 		
 		$.ajax({
-			url : '${pageContext.request.contextPath}/json/menu.json',
+			url : '${pageContext.request.contextPath}/functionAction_listajax.action',
 			type : 'POST',
-			dataType : 'text',
+			dataType : 'json',
 			success : function(data) {
-				var zNodes = eval("(" + data + ")");
-				$.fn.zTree.init($("#functionTree"), setting, zNodes);
+				//var zNodes = eval("(" + data + ")");//将普通text转换成json
+				$.fn.zTree.init($("#functionTree"), setting, data);
 			},
 			error : function(msg) {
 				alert('树加载异常!');
@@ -67,7 +67,22 @@
 		
 		// 点击保存
 		$('#save').click(function(){
-			location.href='${pageContext.request.contextPath}/page_admin_privilege.action';
+			//验证表单
+			var v = $("#roleForm").form("validate");
+			if (v) {
+				//ztree的combobox不是真正的combobox，不会随着表单一起提交
+				var treeObj = $.fn.zTree.getZTreeObj("functionTree");	//获取当前ztree对象
+				var nodes = treeObj.getCheckedNodes(true);				//在提交表单之前将选中的checkbox收集
+				var arr = new Array();
+				for (var i = 0; i < nodes.length; i++) {
+					arr.push(nodes[i].id);
+				}
+				var ids = arr.join(',');	//1,2,3,4
+				//赋值给隐藏域
+				$("input[name=ids]").val(ids);
+				//提交表单
+				$("#roleForm").submit();
+			}
 		});
 	});
 </script>	
@@ -79,15 +94,17 @@
 			</div>
 		</div>
 		<div region="center" style="overflow:auto;padding:5px;" border="false">
-			<form id="roleForm" method="post">
+			<form id="roleForm" action="{pageContext.request.contextPath}/roleAction_add.action" method="post">
+				<!-- 隐藏域 -->
+				<input type="hidden" name="ids"/>
 				<table class="table-edit" width="80%" align="center">
 					<tr class="title">
 						<td colspan="2">角色信息</td>
 					</tr>
 					<tr>
-						<td width="200">编号</td>
+						<td width="200">关键字</td>
 						<td>
-							<input type="text" name="id" class="easyui-validatebox" data-options="required:true" />						
+							<input type="text" name="code" class="easyui-validatebox" data-options="required:true" />						
 						</td>
 					</tr>
 					<tr>

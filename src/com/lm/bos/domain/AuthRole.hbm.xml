@@ -6,7 +6,7 @@
     <class name="com.lm.bos.domain.AuthRole" table="auth_role" catalog="bos">
         <id name="id" type="string">
             <column name="id" length="32" />
-            <generator class="assigned" />
+            <generator class="uuid" />
         </id>
         <property name="name" type="string">
             <column name="name" />
@@ -25,7 +25,7 @@
                 <column name="function_id" length="32" not-null="true" />
             </many-to-many>
         </set>
-        <set name="users" table="user_role" inverse="false" lazy="true" fetch="select">
+        <set name="users" table="user_role" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="role_id" length="32" not-null="true" />
             </key>

@@ -62,7 +62,13 @@
 			  {
 				  field : 'generatemenu',
 				  title : '是否生成菜单',
-				  width : 200
+				  width : 200,
+				  formatter:function(data){
+					  if (data == '1') {
+						return "生成";
+					}
+					  return "不生成";
+				  }
 			  },  
 			  {
 				  field : 'zindex',

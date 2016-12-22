@@ -18,6 +18,7 @@ import com.lm.bos.service.IDecidedzoneService;
 import com.lm.bos.service.IFunctionService;
 import com.lm.bos.service.INoticebillService;
 import com.lm.bos.service.IRegionService;
+import com.lm.bos.service.IRoleService;
 import com.lm.bos.service.IStaffService;
 import com.lm.bos.service.ISubareaService;
 import com.lm.bos.service.IUserService;
@@ -56,6 +57,9 @@ public class BaseAction<T> extends ActionSupport implements ModelDriven<T> {
 	
 	@Autowired
 	protected IFunctionService functionService;
+	
+	@Autowired
+	protected IRoleService roleService;
 
 
 	//·â×°pagebean

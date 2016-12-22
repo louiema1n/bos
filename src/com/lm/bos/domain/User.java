@@ -1,6 +1,7 @@
 package com.lm.bos.domain;
 // Generated 2016-12-21 14:58:41 by Hibernate Tools 3.4.0.CR1
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -20,6 +21,10 @@ public class User implements java.io.Serializable {
 	private String telephone;
 	private String remark;
 	private Set<AuthRole> authRoles = new HashSet<AuthRole>();
+
+/*	public String getDateFormatBirthday() {
+		return new SimpleDateFormat("yyyy-MM-dd").format(birthday);
+	}*/
 
 	//È¨ÏÞÃû³Æ
 	public String getRoleNames() {

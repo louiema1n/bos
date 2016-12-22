@@ -3,10 +3,15 @@ package com.lm.bos.web.action.function;
 import java.io.IOException;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import com.lm.bos.dao.function.IFunctionDao;
 import com.lm.bos.domain.AuthFunction;
+import com.lm.bos.domain.User;
+import com.lm.bos.utils.BOSContext;
 import com.lm.bos.web.action.base.BaseAction;
 
 @Controller
@@ -45,5 +50,26 @@ public class FunctionAction extends BaseAction<AuthFunction> {
 		}
 		functionService.add(this.getModel());
 		return "list";
+	}
+	
+	/**
+	 * 加载菜单
+	 */
+	@Resource
+	private IFunctionDao functionDao;
+	public String findMenu() throws IOException {
+		//获取当前登录用户
+		User loginUser = BOSContext.getLoginUser();
+		List<AuthFunction> list = null;
+		if (loginUser.getUsername().equals("admin")) {
+			//超级管理员,查询所有菜单
+			list = functionDao.findAllMenu();
+		} else {
+			//普通用户,查询id对应菜单
+			list = functionDao.findMenuById(loginUser.getId());
+		}
+		
+		this.writeList2Json(list, new String[]{"authFunction","authFunctions","authRoles"});
+		return NONE;
 	}
 }

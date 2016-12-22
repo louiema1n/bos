@@ -133,7 +133,7 @@ public class UserAction extends BaseAction<User> {
 	 */
 	public String queryPage() throws IOException {
 		userService.queryPage(pageBean);
-		this.writePageBean2Json(pageBean, new String[]{"qpNoticebills","currentPage","detachedCriteria","pageSize","authRoles"});
+		this.writePageBean2Json(pageBean, new String[]{"currentPage","detachedCriteria","pageSize","authRoles"});
 		return NONE;
 	}
 	

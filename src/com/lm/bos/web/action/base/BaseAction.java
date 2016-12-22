@@ -3,6 +3,7 @@ package com.lm.bos.web.action.base;
 import java.io.IOException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -30,6 +31,7 @@ import com.opensymphony.xwork2.ModelDriven;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
+import net.sf.json.processors.JsonValueProcessor;
 
 public class BaseAction<T> extends ActionSupport implements ModelDriven<T> {
 	
@@ -116,6 +118,35 @@ public class BaseAction<T> extends ActionSupport implements ModelDriven<T> {
 		//过滤掉不需要封装的数据
 		JsonConfig jsonConfig = new JsonConfig();
 		jsonConfig.setExcludes(excludes);
+		
+		//设置java.sql.Date对应的转换方法  
+		jsonConfig.registerJsonValueProcessor(java.sql.Date.class,new JsonValueProcessor(){  
+            @Override  
+            public Object processArrayValue(Object value, JsonConfig config) {  
+                return process(value);  
+            }  
+              
+            @Override  
+            public Object processObjectValue(String arg0, Object value,  
+                    JsonConfig arg2) {  
+                return process(value);  
+            }  
+              
+            private Object process(Object value) {  
+                try {  
+                      
+                    if (value instanceof java.sql.Date) {  
+                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");  
+                        return sdf.format( value);  
+                    }  
+                    return value == null ? "" : value.toString();  
+                } catch (Exception e) {  
+                    e.printStackTrace();  
+                    return "";  
+                }  
+
+            }  
+        });  
 		
 		JSONObject jsonObject = JSONObject.fromObject(pageBean, jsonConfig);
 		String data = jsonObject.toString();

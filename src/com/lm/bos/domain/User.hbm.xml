@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.lm.bos.domain.User" table="user" catalog="bos">
+        <id name="id" type="string">
+            <column name="id" length="32" />
+            <generator class="uuid" />
+        </id>
+        <property name="username" type="string">
+            <column name="username" length="20" not-null="true" />
+        </property>
+        <property name="password" type="string">
+            <column name="password" length="32" not-null="true" />
+        </property>
+        <property name="salary" type="java.lang.Double">
+            <column name="salary" precision="22" scale="0" />
+        </property>
+        <property name="birthday" type="date">
+            <column name="birthday" length="10" />
+        </property>
+        <property name="gender" type="string">
+            <column name="gender" length="10" />
+        </property>
+        <property name="station" type="string">
+            <column name="station" length="40" />
+        </property>
+        <property name="telephone" type="string">
+            <column name="telephone" length="11" />
+        </property>
+        <property name="remark" type="string">
+            <column name="remark" />
+        </property>
+        <set name="authRoles" table="user_role" inverse="false" lazy="false" fetch="select">
+            <key>
+                <column name="user_id" length="32" not-null="true" />
+            </key>
+            <many-to-many entity-name="com.lm.bos.domain.AuthRole">
+                <column name="role_id" length="32" not-null="true" />
+            </many-to-many>
+        </set>
+    </class>
+</hibernate-mapping>

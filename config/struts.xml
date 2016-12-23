@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+	<!-- 开启开发模式 -->
+	<constant name="struts.devMode" value="true" />
+	
+	<constant name="struts.objectFactory" value="spring"/>
+	
+	<!-- 注册国际化文件(struts2 core) -->
+	<constant name="struts.custom.i18n.resources" value="message"></constant>
+	
+	<package name="basicstruts2" extends="struts-default">
+	
+		<!-- 注册自定义拦截器BOSLoginInterceptor -->
+		<interceptors>
+			<!-- 自定义拦截器需过滤掉login方法 -->
+			<interceptor name="BOSLoginInterceptor" class="com.lm.bos.web.intercepter.BOSLoginInterceptor">
+				<param name="excludeMethods">login</param>
+			</interceptor>
+			<!-- 如果自定义拦截器将不会执行默认拦截器栈,需将自定义拦截器放入默认拦截器栈中 -->
+			<interceptor-stack name="myInterceptorStack">
+				<interceptor-ref name="BOSLoginInterceptor"></interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		
+		<!-- 重置默认拦截器栈
+		<default-interceptor-ref name="myInterceptorStack"></default-interceptor-ref> -->
+		
+		<!-- 由于自定义拦截器也需要访问login结果集,需将其定义为全局结果集 -->
+		<global-results>
+			<!-- 跳转至登录界面 -->
+			<result name="login">/login.jsp</result>
+			<result name="unauthorized">/unauthorizedUrl.jsp</result>
+		</global-results>
+		
+		<!-- 全局异常捕获 -->
+		<global-exception-mappings>
+			<exception-mapping result="unauthorized" exception="org.apache.shiro.authz.UnauthorizedException"></exception-mapping>
+		</global-exception-mappings>
+		
+	
+		<!-- 需要进行权限控制的页面访问(默认class,默认method) -->
+		<action name="page_*_*">
+			<result name="success" type="dispatcher">/WEB-INF/pages/{1}/{2}.jsp</result>
+		</action>
+		
+		<action name="userAction_*" class="userAction" method="{1}">
+			<!-- 跳转至首页 -->
+			<result name="index">/index.jsp</result>
+			<result name="list">/page_admin_userlist</result>
+		</action>
+			
+		<!-- staff收派员管理 -->
+		<action name="staffAction_*" class="staffAction" method="{1}">
+			<result name="list">/page_base_staff</result>
+		</action>
+		
+		<!-- region区域管理 -->
+		<action name="regionAction_*" class="regionAction" method="{1}">
+			
+		</action>
+		
+		<!-- subarea分区管理 -->
+		<action name="subareaAction_*" class="subareaAction" method="{1}">
+			<result name="list">/page_base_subarea</result>
+		</action>
+		
+		<!-- decidedzone定区管理 -->
+		<action name="decidedzoneAction_*" class="decidedzoneAction" method="{1}">
+			<result name="list">/page_base_decidedzone</result>
+		</action>
+		
+		<!-- noticebill业务受理 -->
+		<action name="noticebillAction_*" class="noticebillAction" method="{1}">
+			<result name="add">/page_qupai_noticebill_add</result>
+		</action>
+		
+		<!-- function功能权限管理 -->
+		<action name="functionAction_*" class="functionAction" method="{1}">
+			<result name="list">/page_admin_function</result>
+		</action>
+		
+		<!-- role角色管理 -->
+		<action name="roleAction_*" class="roleAction" method="{1}">
+			<result name="list">/page_admin_role</result>
+		</action>
+		
+	</package>
+</struts>

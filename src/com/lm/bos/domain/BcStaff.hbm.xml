@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.lm.bos.domain.BcStaff" table="bc_staff" catalog="bos">
+        <id name="id" type="string">
+            <column name="id" length="32" />
+            <generator class="uuid" />
+        </id>
+        <property name="name" type="string">
+            <column name="name" length="20" />
+        </property>
+        <property name="telephone" type="string">
+            <column name="telephone" length="20" />
+        </property>
+        <property name="haspda" type="java.lang.Character">
+            <column name="haspda" length="1" />
+        </property>
+        <property name="deltag" type="java.lang.Character">
+            <column name="deltag" length="1" />
+        </property>
+        <property name="station" type="string">
+            <column name="station" length="40" />
+        </property>
+        <property name="standard" type="string">
+            <column name="standard" length="100" />
+        </property>
+        <set name="bcDecidedzones" table="bc_decidedzone" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="staff_id" length="32" />
+            </key>
+            <one-to-many class="com.lm.bos.domain.BcDecidedzone" />
+        </set>
+    </class>
+    <!-- 定义查询语句 -->
+    <query name="deleteStaff">UPDATE BcStaff SET deltag = '0' WHERE id = ? </query>
+</hibernate-mapping>

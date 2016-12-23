@@ -10,5 +10,6 @@ public class TestDemo {
 	public void Demo1() {
 		Customer customer = new Customer();
 		System.out.println(customer.getAddress());
+		//≤‚ ‘≤‚ ‘
 	}
 }

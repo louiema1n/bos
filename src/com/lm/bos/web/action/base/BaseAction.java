@@ -23,6 +23,7 @@ import com.lm.bos.service.IRoleService;
 import com.lm.bos.service.IStaffService;
 import com.lm.bos.service.ISubareaService;
 import com.lm.bos.service.IUserService;
+import com.lm.bos.service.IWorkordermanageService;
 import com.lm.bos.utils.PageBean;
 import com.lm.crm.domain.Customer;
 import com.opensymphony.xwork2.ActionSupport;
@@ -62,6 +63,9 @@ public class BaseAction<T> extends ActionSupport implements ModelDriven<T> {
 	
 	@Autowired
 	protected IRoleService roleService;
+	
+	@Resource
+	protected IWorkordermanageService workordermanageService;
 
 
 	//·â×°pagebean

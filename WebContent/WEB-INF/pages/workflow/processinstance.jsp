@@ -67,12 +67,14 @@
   						</script>
   						<script type="text/javascript">
   							function showPng(id){
-  								window.showModalDialog("${pageContext.request.contextPath}/processInstanceAction_showPng.action?id="+id);
+  								window.open("${pageContext.request.contextPath}/processInstanceAction_showPng.action?id="+id);
   							}
   						</script>
   					</td>
   					<td>
-  						<a onclick="showPng('${id}');" href="#">查看流程图</a>
+  						<a onclick="showPng('${id}');" 
+  							class="easyui-linkbutton" data-options="iconCls:'icon-search'">
+  						查看流程图</a>
   					</td>
   				</tr>
   			</s:iterator>

@@ -25,8 +25,23 @@ public class QpWorkordermanage implements java.io.Serializable {
 	private Integer feeitemnum;
 	private Double actlweit;
 	private String vol;
-	private String managerCheck;
 	private Date updatetime;
+	
+	private String managerCheck = "0";	//0-未审核;1-已审核
+	private String start = "0";			//0-未启动;1-已启动
+	@Override
+	public String toString() {
+		return "工作单信心 [编号=" + id + ", 货物名称=" + product + ", 数量=" + num + ", 重量=" + weight
+				+ ", 收货人=" + receivername + ", 电话=" + receiverphone + "]";
+	}
+
+	public String getStart() {
+		return start;
+	}
+
+	public void setStart(String start) {
+		this.start = start;
+	}
 
 	public QpWorkordermanage() {
 	}

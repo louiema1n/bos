@@ -88,6 +88,12 @@
 			<result name="list">/page_admin_role</result>
 		</action>
 		
+		<!-- workordermanage工作单管理 -->
+		<action name="workordermanageAction_*" class="workordermanageAction" method="{1}">
+			<result name="list">/page_workflow_startransfer</result>
+			<result name="tolist" type="redirect">workordermanageAction_list</result>
+		</action>
+		
 		<!-- processdefinitiona流程定义管理 -->
 		<action name="processDefinitionAction_*" class="processDefinitionAction" method="{1}">
 			<result name="list">/page_workflow_processdefinition_list</result>
@@ -102,6 +108,23 @@
 					<param name="bufferSize">1024</param>
 				 -->
 			</result>
+		</action>
+		
+		<!-- processInstance流程实例管理 -->
+		<action name="processInstanceAction_*" class="processInstanceAction" method="{1}">
+			<result name="list">page_workflow_processinstance</result>
+			<result name="showPng">page_workflow_image</result>
+			<result name="viewImage" type="stream">
+				<param name="contentType">image/png</param>
+				<param name="inputName">imgStream</param>
+			</result>
+		</action>
+		
+		<!-- taskGroup组任务管理 -->
+		<action name="taskAction_*" class="taskAction" method="{1}">
+			<result name="findGroupTask">page_workflow_grouptask</result>
+			<result name="tofindGroup" type="redirect">taskAction_findGroupTask</result>
+			<result name="findPersonalTask">/page_workflow_personaltask</result>
 		</action>
 		
 	</package>

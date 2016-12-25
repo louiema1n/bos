@@ -120,11 +120,13 @@
 			</result>
 		</action>
 		
-		<!-- taskGroup组任务管理 -->
+		<!-- task任务管理 -->
 		<action name="taskAction_*" class="taskAction" method="{1}">
 			<result name="findGroupTask">page_workflow_grouptask</result>
 			<result name="tofindGroup" type="redirect">taskAction_findGroupTask</result>
-			<result name="findPersonalTask">/page_workflow_personaltask</result>
+			<result name="findPersonalTask">page_workflow_personaltask</result>
+			<result name="check">page_workflow_check</result>
+			<result name="tofindPersonalTask" type="redirect">taskAction_findPersonalTask</result>
 		</action>
 		
 	</package>

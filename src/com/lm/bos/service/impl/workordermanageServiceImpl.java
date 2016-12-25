@@ -6,9 +6,12 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.activiti.engine.HistoryService;
 import org.activiti.engine.RuntimeService;
+import org.activiti.engine.TaskService;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +28,12 @@ public class workordermanageServiceImpl implements IWorkordermanageService {
 	
 	@Resource
 	private RuntimeService runtimeService;
+	
+	@Resource
+	private TaskService taskService;
+	
+	@Autowired
+	private HistoryService historyService;
 	
 	@Override
 	public void add(QpWorkordermanage entity) {
@@ -59,6 +68,27 @@ public class workordermanageServiceImpl implements IWorkordermanageService {
 		String processDefinitionKey = "transfer";
 		String businesskey = id;	//业务主键--业务表主键值---让工作流程找到业务数据
 		runtimeService.startProcessInstanceByKey(processDefinitionKey, businesskey, variables);
+	}
+
+	/**
+	 * 办理审核任务
+	 */
+	@Override
+	public void checkWorkOrderManage(String workordermanageId, String processInstanceId, Integer check, String taskId) {
+		//根据check审核任务
+		Map<String, Object> variables = new HashMap<>();
+		//将check放入流程变量
+		variables.put("check", check);
+		//办理任务
+		taskService.complete(taskId, variables);
+		if (check == 0) {
+			//审核不通过,将workordermanage的start改为0
+			QpWorkordermanage workordermanage = workordermanageDao.findById(workordermanageId);
+			workordermanage.setStart("0");
+			//删除历史流程实例记录--complete之后processInstanceId为空
+			historyService.deleteHistoricProcessInstance(processInstanceId);
+		}
+		
 	}
 
 }

@@ -15,5 +15,7 @@ public interface IWorkordermanageService {
 	List<QpWorkordermanage> listNoStart();
 
 	void start(String id);
+
+	void checkWorkOrderManage(String workordermanageId, String processInstanceId, Integer check, String taskId);
 	
 }
